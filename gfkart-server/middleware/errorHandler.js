@@ -1,0 +1,13 @@
+const {logEvents} = require("./logger")
+
+
+const errorHandler = (err,req,res,next) =>{
+    const finalMessage = `${err.name}\t${err.messaage}`
+    logEvents(finalMessage,"errLog.log")
+    console.log(err.stack)
+    const status = res.statusCode ? res.statusCode : 500 // server error 
+    res.status(status)
+    res.json({ message: err.message })
+}
+
+module.exports = errorHandler
